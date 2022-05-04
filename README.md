@@ -1,2 +1,2 @@
-# bing-wallpaper
+# bing daily wallpaper
 bing daily wallpaper
