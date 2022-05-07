@@ -19,3 +19,9 @@ jobs:
       with:
         name: my-artifact
         path: ./*.json
+        
+    - name: Push changes
+      uses:  ad-m/github-push-action@master
+      with:
+         github_token: ${{ secrets.MY_GIT_TOKEN }}
+         branch: main
