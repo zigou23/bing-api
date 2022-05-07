@@ -18,7 +18,12 @@ jobs:
       with:
         name: my-artifact
         path: ./*.json
-        
+    - name: Commit files
+      run: |
+         git config --local user.email "a1923458037@gmail.com"
+         git config --local user.name "zigou23"
+         git add .
+         git commit -m "update"
     - name: Push changes
       uses:  ad-m/github-push-action@master
       with:
