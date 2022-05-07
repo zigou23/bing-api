@@ -9,26 +9,13 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
-#     - uses: actions/checkout@v2
-#     - name: Validate composer.json and composer.lock
-#       run: composer validate --strict
+    - name: Fetch
+      run: git clone https://github.com/zigou23/bing-wallpaper wp
+      
+    - name: Run PHP
+      run: cd wp && sudo apt update && sudo apt install php7.4 -y && php7.4 ./json/generate15day.php
 
-    - name: PHP Runner
-      uses: franzliedke/gh-action-php@0.2.0
-      
-    - name: run php
-      run: php ./json/generate15day.php
-      
-    - name: Commit files
-      run: |
-          git config --local user.email "test@biji.cf"
-          git config --local user.name "zigou23"
-          git add .
-          git commit -m "update it at $(date +'%Y-%m-%d %H:%M:%S')"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
+    - uses: actions/upload-artifact@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
-          
+        name: my-artifact
+        path: ./*.json
