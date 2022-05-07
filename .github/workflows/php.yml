@@ -14,15 +14,6 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-
     - name: PHP Runner
       uses: franzliedke/gh-action-php@0.2.0
       
@@ -41,6 +32,6 @@ jobs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.MY_GIT_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: main
           
