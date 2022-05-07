@@ -3,11 +3,6 @@ name: PHP Composer
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-permissions:
-  contents: read
 
 jobs:
   build:
@@ -15,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-
+    - uses: actions/checkout@v2
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
@@ -29,11 +23,24 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
+    - name: PHP Runner
+      uses: franzliedke/gh-action-php@0.2.0
+      
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
-
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
+      
+    - name: run php
+      run: php ./json/generate15day.php
+      
+    - name: Commit files
+      run: |
+          git config --local user.email "test@biji.cf"
+          git config --local user.name "zigou23"
+          git add .
+          git commit -m "update it at $(date +'%Y-%m-%d %H:%M:%S')"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.MY_GIT_TOKEN }}
+        branch: main
+          
