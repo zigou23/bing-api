@@ -10,6 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+#     - uses: actions/checkout@v2
+#     - name: Validate composer.json and composer.lock
+#       run: composer validate --strict
+
+    - name: PHP Runner
+      uses: franzliedke/gh-action-php@0.2.0
       
     - name: run php
       run: php ./json/generate15day.php
