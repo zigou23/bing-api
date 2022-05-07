@@ -9,6 +9,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    steps:
     - name: Fetch
       run: git clone https://github.com/zigou23/bing-wallpaper wp
     - name: Run PHP
